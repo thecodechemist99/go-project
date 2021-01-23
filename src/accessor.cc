@@ -6,7 +6,7 @@
 
 #define DEFAULT_SPI_SPEED 5000L
 
-#define DEBUG   0
+#define DEBUG   1
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 

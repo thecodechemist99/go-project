@@ -21,7 +21,8 @@ function checkForTag () {
 function readPage (page) {
     rc522.readPage(page, (err, retVal) => {
         if (err === 0) {
-        }       
+
+        }
         console.log(retVal, err);
     });
 }
@@ -33,7 +34,8 @@ function writePage (page, str) {
     let data = new Buffer (str);
     rc522.writePage(page, data, (err, reVal) => {
         if (err === 0) {
-        }       
+
+        }
         console.log(retVal, err);
     });
 }

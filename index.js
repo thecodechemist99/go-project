@@ -21,7 +21,6 @@ function checkForTag () {
 function readPage (page) {
     rc522.readPage(page, (err, retVal) => {
         if (err === 0) {
-
         }
         console.log(retVal, err);
     });
@@ -35,7 +34,6 @@ function writePage (page, str) {
     console.log(`Attempting to write ${data} ...`)
     rc522.writePage(page, data, (err, retVal) => {
         if (err === 0) {
-
         }
         console.log(retVal, err);
     });

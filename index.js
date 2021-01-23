@@ -31,7 +31,7 @@ function writePage (page, str) {
     if (typeof str != 'string') {
         str = str.toString();
     }
-    let data = new Buffer (str);
+    let data = Buffer.from(str);
     rc522.writePage(page, data, (err, retVal) => {
         if (err === 0) {
 

@@ -13,6 +13,7 @@ function checkForTag () {
         // We don't have a tag, but there's one on the reader
         gCurrentTag = ret;
         console.log('tagPresented', gCurrentTag);
+        // writePage(1, 'test');
         readPage(1);
     }
 }
@@ -21,6 +22,19 @@ function readPage (page) {
     rc522.readPage(page, (err, retVal) => {
         if (err === 0) {
             
+        }       
+        console.log(retVal, err);
+    });
+}
+
+function writePage (page, str) {
+    if (typeof str != 'string') {
+        str = str.toString();
+    }
+    let data = new Buffer (str);
+    rc522.writePage(page, data, (err, reVal) => {
+        if (err === 0) {
+
         }       
         console.log(retVal, err);
     });

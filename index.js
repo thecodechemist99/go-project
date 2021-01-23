@@ -13,7 +13,7 @@ function checkForTag () {
         // We don't have a tag, but there's one on the reader
         gCurrentTag = ret;
         console.log('tagPresented', gCurrentTag);
-        // writePage(1, 'test');
+        writePage(1, 'test');
         readPage(1);
     }
 }

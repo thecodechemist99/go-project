@@ -14,7 +14,7 @@ function checkForTag () {
         gCurrentTag = ret;
         console.log('tagPresented', gCurrentTag);
         writePage(1, 'test');
-        //readPage(1);
+        readPage(1);
     }
 }
 

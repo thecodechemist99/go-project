@@ -1,6 +1,7 @@
 const rc522 = require('./build/Debug/rfid_rc522');
 
 let gCurrentTag = undefined;
+console.log('Script running ...');
 
 function checkForTag () {
     let ret = rc522.checkForTag();

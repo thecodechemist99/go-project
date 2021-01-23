@@ -14,7 +14,7 @@ function checkForTag () {
         gCurrentTag = ret;
         console.log('tagPresented', gCurrentTag);
         writePage(1, 'test');
-        readPage(1);
+        //readPage(1);
     }
 }
 
@@ -32,6 +32,7 @@ function writePage (page, str) {
         str = str.toString();
     }
     let data = Buffer.from(str);
+    console.log(`Attempting to write ${data} ...`)
     rc522.writePage(page, data, (err, retVal) => {
         if (err === 0) {
 

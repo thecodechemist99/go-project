@@ -32,7 +32,7 @@ function writePage (page, str) {
         str = str.toString();
     }
     let data = new Buffer (str);
-    rc522.writePage(page, data, (err, reVal) => {
+    rc522.writePage(page, data, (err, retVal) => {
         if (err === 0) {
 
         }

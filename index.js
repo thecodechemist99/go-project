@@ -15,15 +15,15 @@ function checkForTag () {
         gCurrentTag = ret;
         console.log('tagPresented', gCurrentTag);
         // writePage(1, 'test');
-        // readPage(1);
+        readPage(1);
     }
 }
 
 function readPage (page) {
     rc522.readPage(page, (err, retVal) => {
-        if (err === 0) {
-
-        }
+//        if (err === 0) {
+//
+//        }
         console.log(retVal, err);
     });
 }

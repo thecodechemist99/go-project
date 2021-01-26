@@ -345,7 +345,7 @@ char PcdRead(uint8_t addr,uint8_t *p )
         // calculate CRC
 		CalulateCRC(ucComMF522Buf,16,CRC_buff);     // 16 bytes should used for CRC check
 		
-  //printf("debug actual: %02x%02x calculated: %02x%02x   ",ucComMF522Buf[16],ucComMF522Buf[17],CRC_buff[0],CRC_buff[1]);
+        printf("debug actual: %02x%02x calculated: %02x%02x   ",ucComMF522Buf[16],ucComMF522Buf[17],CRC_buff[0],CRC_buff[1]);
         
         // check CRC is correct
         if ((CRC_buff[0]!=ucComMF522Buf[16])||(CRC_buff[1]!=ucComMF522Buf[17])) 

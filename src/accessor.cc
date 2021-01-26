@@ -379,11 +379,6 @@ napi_value readPage(napi_env env, napi_callback_info args) {
 //        napi_throw_type_error(env, "Number expected", "Wrong arguments");
 //        return nullptr;
 //    }
-
-//    if (!argv[0]->IsNumber()) {
-//        napi_throw_type_error(env, "Number expected", "Wrong arguments");
-//        return nullptr;
-//    }
 #endif
 
     // Which page have we been asked for

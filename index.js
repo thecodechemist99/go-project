@@ -70,14 +70,12 @@ function pay () {
 function blink (colour) {
     if (colour === 'red') {
         rpio.write(5, rpio.HIGH);
-        setTimeout(() => {
-            rpio.write(5, rpio.LOW);
-        }, 100);
+        rpio.sleep(1);
+        rpio.write(5, rpio.LOW);
     } else if (colour === 'green') {
         rpio.write(3, rpio.HIGH);
-        setTimeout(() => {
-            rpio.write(3, rpio.LOW);
-        }, 100);
+        rpio.sleep(1);
+        rpio.write(3, rpio.LOW);
     }
 }
 

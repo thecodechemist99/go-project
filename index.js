@@ -1,7 +1,11 @@
+const rpio = require('rpio');
 const rc522 = require('./build/Debug/rfid_rc522');
+const requestApi = require('./src/requestApi');
+
+/* ====== Detect tags and read UID ====== */
 
 let gCurrentTag = undefined;
-console.log('Script running ...');
+console.log('Searching for tags ...');
 
 function checkForTag () {
     let ret = rc522.checkForTag();
@@ -13,67 +17,79 @@ function checkForTag () {
     } else if ((ret !== undefined) && (gCurrentTag === undefined)) {
         // We don't have a tag, but there's one on the reader
         gCurrentTag = ret;
-        console.log('tagPresented', gCurrentTag);
-        // writePage(1, 'test');
+        tagDetected(gCurrentTag);
         readPage(4);
     }
-}
-
-function readPage (page) {
-    rc522.readPage(page, (err, retVal) => {
-        if (err === 0) {
-            console.log(retVal);
-        }
-        console.log(`Error: ${err}`);
-    });
-}
-
-function writePage (page, str) {
-    if (typeof str != 'string') {
-        str = str.toString();
-    }
-    let data = Buffer.from(str);
-    console.log(`Attempting to write ${data} ...`)
-    rc522.writePage(page, data, (err, retVal) => {
-        if (err === 0) {
-            
-        }
-        console.log(retVal, err);
-    });
 }
 
 // monitor tag
 setInterval(checkForTag, 20);
 
-//const rfid = require('rfid-rc522');
+/* ====== Act upon tag detection depending on device type ====== */
 
-//console.log('Waiting for input ...');
-//rfid.registerTagCallback(tagDetected);
+const dTypes = {
+    IN: 0,
+    OUT: 1,
+    PAY: 2
+}
+rpio.open(2, rpio.OUTPUT, rpio.LOW);
+rpio.open(3, rpio.OUTPUT, rpio.LOW);
 
-//function tagDetected (info) {
-//    if (info === 'tagPresented') {
-//        console.log('Tag presented.');
-//
-//      // let buf = Buffer.alloc(4);
-//      // buf.write('test');
-//
-//      let buf = Buffer.from('test');
-//      console.log(buf);
-//        rfid.writePage(5, buf, readTag);
-//        // rfid.writePage(0, 'test', readTag);
-//      // readTag();
-//    } else {
-//        console.log('Tag removed.');
-//    }
-//}
-//
-//function readTag () {
-//    for (let i = 0; i < 100; i++) {
-//      rfid.readPage(i, printPage);
-//    }
-//}
+const device = dTypes.IN;
+const stationId = 0;
 
-//function printPage (page) {
-//    console.log(page);
-//    // console.log(page.toString('utf-8'));
-//}
+function tagDetected (id) {
+    console.log(`Tag with UID ${id} detected.`);
+    blink('green');
+
+    switch (device) {
+        case 0:
+            checkIn(id);
+            break;
+        case 1:
+            checkOut(id);
+            break;
+        case 2:
+            pay(id);
+            break;
+    }
+}
+
+function checkIn () {
+//    checkApi();
+}
+
+function checkOut () {
+//    checkApi();
+}
+
+function pay () {
+//    checkApi();
+}
+
+function blink (colour) {
+    if (colour === 'red') {
+        rpio.write(3, rpio.HIGH);
+        setTimeout(() => {
+            rpio.write(3, rpio.LOW);
+        }, 100);
+    } else if (colour === 'green') {
+        rpio.write(3, rpio.HIGH);
+        setTimeout(() => {
+            rpio.write(3, rpio.LOW);
+        }, 100);
+    }
+}
+
+async function checkApi (params) {
+    // set request options
+    const options = {
+        hostname: '10.0.0.175:port',
+        path: '/note?query=' + encodeURI(query),
+        method: 'GET'
+    };
+    
+    // send request
+    const data = await requestApi(options, config.https, null);
+    const json = JSON.parse(data);
+}

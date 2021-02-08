@@ -18,7 +18,6 @@ function checkForTag () {
         // We don't have a tag, but there's one on the reader
         gCurrentTag = ret;
         tagDetected(gCurrentTag);
-        readPage(4);
     }
 }
 
@@ -55,15 +54,15 @@ function tagDetected (id) {
     }
 }
 
-function checkIn () {
+function checkIn (tagId) {
 //    checkApi();
 }
 
-function checkOut () {
+function checkOut (tagId) {
 //    checkApi();
 }
 
-function pay () {
+function pay (tagId) {
 //    checkApi();
 }
 

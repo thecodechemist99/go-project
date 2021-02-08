@@ -32,8 +32,8 @@ const dTypes = {
     OUT: 1,
     PAY: 2
 }
-rpio.open(2, rpio.OUTPUT, rpio.LOW);
 rpio.open(3, rpio.OUTPUT, rpio.LOW);
+rpio.open(5, rpio.OUTPUT, rpio.LOW);
 
 const device = dTypes.IN;
 const stationId = 0;
@@ -69,12 +69,12 @@ function pay () {
 
 function blink (colour) {
     if (colour === 'red') {
-        rpio.write(3, rpio.HIGH);
+        rpio.write(5, rpio.HIGH);
         setTimeout(() => {
             rpio.write(3, rpio.LOW);
         }, 100);
     } else if (colour === 'green') {
-        rpio.write(3, rpio.HIGH);
+        rpio.write(5, rpio.HIGH);
         setTimeout(() => {
             rpio.write(3, rpio.LOW);
         }, 100);

@@ -12,7 +12,7 @@
   "version": "0.2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/museuminabox/rfid-rc522.git"
+    "url": "git+https://github.com/thecodechemist99/go-project.git"
   },
   "scripts": {
     "install": "(node-gyp rebuild) || (exit 0)",

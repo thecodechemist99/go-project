@@ -1,11 +1,49 @@
+const fs = require('fs').promises;
 const rpio = require('rpio');
 const mariadb = require('mariadb');
 const rc522 = require('./build/Debug/rfid_rc522');
 
+/* ====== Setup ====== */
+
+let device;
+let stationId;
+
+setup();
+
+async function setup () {
+    try {
+        // read setup file and set device options
+        const data = await fs.readFile('./src/setup.json');
+        const options = JSON.stringify(data);
+
+        device = options.dType;
+        stationId = options.stationId;
+    } catch (err) {
+        console.error(`Error reading setup file: ${err}`);
+    }
+
+    try {
+        // set default for LEDs to LOW
+        rpio.open(3, rpio.OUTPUT, rpio.LOW);
+        rpio.open(5, rpio.OUTPUT, rpio.LOW);
+    } catch (err) {
+        console.error(`Error setting LEDs default LOW: ${err}`);
+    }
+
+    try {
+        // monitor tag
+        setInterval(checkForTag, 20);
+        console.log('Searching for tags ...');
+    } catch (err) {
+        console.error(`Error monitoring tokens: ${err}`);
+    }
+
+}
+
+
 /* ====== Detect tags and read UID ====== */
 
 let gCurrentTag = undefined;
-console.log('Searching for tags ...');
 
 function checkForTag () {
     let ret = rc522.checkForTag();
@@ -21,23 +59,13 @@ function checkForTag () {
     }
 }
 
-// monitor tag
-setInterval(checkForTag, 20);
-
 /* ====== Act upon tag detection depending on device type ====== */
 
 const dTypes = {
-    IN: 0,
-    OUT: 1,
-    PAY: 2
+    IN: 'IN',
+    OUT: 'OUT',
+    PAY: 'PAY'
 }
-rpio.open(3, rpio.OUTPUT, rpio.LOW);
-rpio.open(5, rpio.OUTPUT, rpio.LOW);
-
-////// Device Settings //////
-const device = dTypes.IN;
-const stationId = 1;
-/////////////////////////////
 
 function tagDetected (id) {
     console.log(`Tag with UID ${id} detected.`);

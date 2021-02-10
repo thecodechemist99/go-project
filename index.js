@@ -1,6 +1,6 @@
 const rpio = require('rpio');
+const mariadb = require('mariadb');
 const rc522 = require('./build/Debug/rfid_rc522');
-const requestApi = require('./src/requestApi');
 
 /* ====== Detect tags and read UID ====== */
 
@@ -34,37 +34,41 @@ const dTypes = {
 rpio.open(3, rpio.OUTPUT, rpio.LOW);
 rpio.open(5, rpio.OUTPUT, rpio.LOW);
 
+////// Device Settings //////
 const device = dTypes.IN;
 const stationId = 0;
+/////////////////////////////
 
 function tagDetected (id) {
     console.log(`Tag with UID ${id} detected.`);
     blink('green');
 
     switch (device) {
-        case 0:
+        case dTypes.IN:
             checkIn(id);
             break;
-        case 1:
+        case dTypes.OUT:
             checkOut(id);
             break;
-        case 2:
+        case dTypes.PAY:
             pay(id);
             break;
     }
 }
 
-function checkIn (tagId) {
-//    checkApi();
+async function checkIn (tagId) {
+    queryDatabase("INSERT INTO journey_log(token_id, station_id) value(?, ?)", [tagId, stationId]);
 }
 
-function checkOut (tagId) {
-//    checkApi();
+async function checkOut (tagId) {
+    queryDatabase("SELECT * FROM journey_log WHERE token_id = '?'", tagId);
 }
 
-function pay (tagId) {
-//    checkApi();
+async function pay (tagId) {
+    queryDatabase("INSERT INTO journey_log(token_id, station_id) value(?, ?)", [tagId, stationId]);
 }
+
+/* ====== Hardware related actions ====== */
 
 function blink (colour) {
     if (colour === 'red') {
@@ -78,15 +82,25 @@ function blink (colour) {
     }
 }
 
-async function checkApi (params) {
-    // set request options
-    const options = {
-        hostname: '10.0.0.175:port',
-        path: '/note?query=' + encodeURI(query),
-        method: 'GET'
-    };
-    
-    // send request
-    const data = await requestApi(options, config.https, null);
-    const json = JSON.parse(data);
+/* ====== Database connection ====== */
+// buildt upon example code from https://mariadb.com/kb/en/getting-started-with-the-nodejs-connector/
+
+const pool = mariadb.createPool({
+     host: '10.0.0.175', 
+     user:'pi', 
+     password: 'raspberry',
+     connectionLimit: 5
+});
+
+async function queryDatabase(query, vars) {
+    let conn;
+    try {
+	    conn = await pool.getConnection();
+	    const res = await conn.query(query, vars);
+	    console.log(res);
+    } catch (err) {
+        console.error(`Error querying database: ${err}`);
+    } finally {
+        if (conn) return conn.end();
+    }
 }

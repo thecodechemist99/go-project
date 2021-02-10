@@ -62,3 +62,6 @@ typings/
 
 # Apple system files
 .DS_Store
+
+# Setup file
+src/setup.json

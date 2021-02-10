@@ -36,7 +36,7 @@ rpio.open(5, rpio.OUTPUT, rpio.LOW);
 
 ////// Device Settings //////
 const device = dTypes.IN;
-const stationId = 0;
+const stationId = 1;
 /////////////////////////////
 
 function tagDetected (id) {

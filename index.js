@@ -89,6 +89,7 @@ const pool = mariadb.createPool({
      host: '10.0.0.175', 
      user:'pi', 
      password: 'raspberry',
+     database: 'go',
      connectionLimit: 5
 });
 

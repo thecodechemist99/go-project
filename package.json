@@ -29,17 +29,5 @@
     "mariadb": "^2.5.2",
     "rpio": "^2.4.2"
   },
-  "optionalDependencies": {},
-  "bugs": {
-    "url": "https://github.com/museuminabox/rfid-rc522/issues"
-  },
-  "homepage": "https://github.com/museuminabox/rfid-rc522#readme",
-  "directories": {},
-  "maintainers": [
-    {
-      "name": "Adrian McEwen",
-      "email": "adrian@museuminabox.org"
-    }
-  ],
   "readme": "README.md"
 }

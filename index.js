@@ -37,7 +37,6 @@ async function setup () {
     } catch (err) {
         console.error(`Error monitoring tokens: ${err}`);
     }
-
 }
 
 

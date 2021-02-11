@@ -91,7 +91,7 @@ function checkIn (tagId) {
 
 function checkOut (tagId) {
     console.log('check out');
-    queryDatabase("SELECT * FROM journey_log WHERE token_id = '?'", tagId);
+    queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?'", tagId);
 }
 
 function pay (tagId) {

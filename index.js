@@ -137,10 +137,14 @@ const pool = mariadb.createPool({
 
 async function queryDatabase(query) {
     let conn;
+    let res;
     try {
 	    conn = await pool.getConnection();
-        return conn.query(query);
+        res = conn.query(query);
     } catch (err) {
         console.error(`Error querying database: ${err}`);
+    } finally {
+        conn.end();
+        return res;
     }
 }

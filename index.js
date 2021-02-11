@@ -88,7 +88,8 @@ async function tagDetected (id) {
 async function checkIn (tagId) {
     if (tagId != 2) {
         const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
-        if (JSON.parse(JSON.stringify(res)).warningStatus) {
+        const result = (JSON.parse(JSON.stringify(res)));
+        if (result.warningStatus) {
             blink('green');
         } else {
             blink('red');

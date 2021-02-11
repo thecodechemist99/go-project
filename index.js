@@ -92,7 +92,7 @@ async function checkIn (tagId) {
     let conn;
     try {
 	    conn = await pool.getConnection();
-	    const res = await conn.query("INSERT INTO journey_log(token_id, station_id) value('?', ?)", [tagId, stationId]);
+	    const res = await conn.query("INSERT INTO journey_log(token_id, station_id) value('?', ?)", [stationId, tagId]);
 	    console.log(res);
     } catch (err) {
         console.error(`Error querying database: ${err}`);

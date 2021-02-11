@@ -89,6 +89,7 @@ async function tagDetected (id) {
 
 async function checkIn (tagId) {
     console.log('check in');
+    console.log(Number.isInteger(stationId));
     let conn;
     try {
 	    conn = await pool.getConnection();

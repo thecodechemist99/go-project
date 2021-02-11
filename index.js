@@ -87,7 +87,7 @@ async function tagDetected (id) {
     }
 }
 
-function checkIn (tagId) {
+async function checkIn (tagId) {
     console.log('check in');
     let conn;
     try {

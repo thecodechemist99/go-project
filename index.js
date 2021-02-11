@@ -137,6 +137,7 @@ async function queryDatabase(query) {
 	    conn = await pool.getConnection();
         const res = await conn.query(query);
         conn.end();
+        console.log(res);
         return res;
     } catch (err) {
         console.error(`Error querying database: ${err}`);

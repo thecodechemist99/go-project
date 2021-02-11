@@ -5,6 +5,12 @@ const rc522 = require('./build/Debug/rfid_rc522');
 
 /* ====== Setup ====== */
 
+const dTypes = {
+    IN: 'IN',
+    OUT: 'OUT',
+    PAY: 'PAY'
+}
+
 let device;
 let stationId;
 
@@ -13,8 +19,8 @@ setup();
 async function setup () {
     try {
         // read setup file and set device options
-        const data = await fs.readFile('./src/setup.json');
-        const options = JSON.stringify(data);
+        const data = await fs.readFile('./src/setup.json', {encoding: 'utf8'});
+        const options = JSON.parse(data);
 
         device = options.dType;
         stationId = options.stationId;
@@ -24,8 +30,10 @@ async function setup () {
 
     try {
         // set default for LEDs to LOW
-        rpio.open(3, rpio.OUTPUT, rpio.LOW);
-        rpio.open(5, rpio.OUTPUT, rpio.LOW);
+        if (device != dTypes.PAY) {
+            rpio.open(3, rpio.OUTPUT, rpio.LOW);
+            rpio.open(5, rpio.OUTPUT, rpio.LOW);
+        }
     } catch (err) {
         console.error(`Error setting LEDs default LOW: ${err}`);
     }
@@ -60,26 +68,21 @@ function checkForTag () {
 
 /* ====== Act upon tag detection depending on device type ====== */
 
-const dTypes = {
-    IN: 'IN',
-    OUT: 'OUT',
-    PAY: 'PAY'
-}
-
 async function tagDetected (id) {
     console.log(`Tag with UID ${id} detected.`);
-    blink('green');
 
-    console.log('Type: ' + device + ' and check value ' + dTypes.IN);
     switch (device) {
         case dTypes.IN:
             checkIn(id);
+            blink('green');
             break;
         case dTypes.OUT:
             checkOut(id);
+            blink('green');
             break;
         case dTypes.PAY:
             pay(id);
+            blink('green');
             break;
     }
 }

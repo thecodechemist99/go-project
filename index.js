@@ -90,14 +90,14 @@ async function checkIn (tagId) {
     if (tagId != 2) {
         const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
         console.log(JSON.stringify(res));
-        console.log(JSON.parse(JSON.stringify(res)));
-        console.log(JSON.parse(JSON.stringify(res)).warningStatus);
-        if (JSON.parse(JSON.stringify(res)).warningStatus) {
-            blink('red');
-        } else {
-            blink('green');
-        }
-    }
+//        console.log(JSON.parse(JSON.stringify(res)));
+//        console.log(JSON.parse(JSON.stringify(res)).warningStatus);
+//        if (JSON.parse(JSON.stringify(res)).warningStatus) {
+//            blink('red');
+//        } else {
+//            blink('green');
+//        }
+//    }
 }
 
 async function checkOut (tagId) {

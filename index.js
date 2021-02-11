@@ -92,9 +92,9 @@ async function checkIn (tagId) {
     const result = (JSON.parse(JSON.stringify(res)));
     console.log(result);
     if (result.warningStatus) {
-        blink('green');
-    } else {
         blink('red');
+    } else {
+        blink('green');
     }
 }
 

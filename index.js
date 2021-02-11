@@ -152,7 +152,7 @@ async function queryDatabase (query) {
     let conn;
     try {
         conn = await pool.getConnection();
-        const res = await conn.query(query);
+        return conn.query(query);
 	    console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
         return res;
     } catch (err) {

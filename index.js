@@ -62,7 +62,9 @@ function checkForTag () {
     } else if ((ret !== undefined) && (gCurrentTag === undefined)) {
         // We don't have a tag, but there's one on the reader
         gCurrentTag = ret;
-        tagDetected(gCurrentTag);
+        if (gCurrentTag != 2) {
+            tagDetected(gCurrentTag);
+        }
     }
 }
 
@@ -85,31 +87,25 @@ function tagDetected (id) {
 }
 
 async function checkIn (tagId) {
-    if (tagId != 2) {
-        console.log('check in');
-        const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
-        const result = (JSON.parse(JSON.stringify(res)));
-        console.log(result);
-        if (result.warningStatus) {
-            blink('green');
-        } else {
-            blink('red');
-        }
+    console.log('check in');
+    const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
+    const result = (JSON.parse(JSON.stringify(res)));
+    console.log(result);
+    if (result.warningStatus) {
+        blink('green');
+    } else {
+        blink('red');
     }
 }
 
 async function checkOut (tagId) {
-    if (tagId != 2) {
-        console.log('check out');
-        queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?'", tagId);
-    }
+    console.log('check out');
+    queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?'", tagId);
 }
 
 async function pay (tagId) {
-    if (tagId != 2) {
-        console.log('pay');
-        queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
-    }    
+    console.log('pay');
+    queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
 }
 
 /* ====== Hardware related actions ====== */

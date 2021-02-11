@@ -99,13 +99,17 @@ async function checkIn (tagId) {
 }
 
 async function checkOut (tagId) {
-    console.log('check out');
-    queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?'", tagId);
+    if (tagId != 2) {
+        console.log('check out');
+        queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?'", tagId);
+    }
 }
 
 async function pay (tagId) {
-    console.log('pay');
-    queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
+    if (tagId != 2) {
+        console.log('pay');
+        queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
+    }    
 }
 
 /* ====== Hardware related actions ====== */

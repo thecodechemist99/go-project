@@ -89,11 +89,13 @@ async function checkIn (tagId) {
     console.log('check in');
     if (tagId != 2) {
         const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
-        if (res.includes('OkPacket')) {
-            blink('green');
-        } else {
-            blink('red');
-        }
+        const json = JSON.parse(res);
+        console.lof(json);
+//        if (res.includes('OkPacket')) {
+//            blink('green');
+//        } else {
+//            blink('red');
+//        }
     }
 }
 

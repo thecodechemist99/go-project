@@ -133,14 +133,27 @@ const pool = mariadb.createPool({
      connectionLimit: 5
 });
 
-async function queryDatabase(query) {
+//async function queryDatabase(query) {
+//    let conn;
+//    try {
+//	    conn = await pool.getConnection();
+//        const res = conn.query(query);
+//        conn.end();
+//        console.log(res);
+//        return res;
+//    } catch (err) {
+//        console.error(`Error querying database: ${err}`);
+//    } finally {
+//        if (conn) return conn.end();
+//    }
+//}
+
+async function queryDatabase (query) {
     let conn;
     try {
-	    conn = await pool.getConnection();
-        const res = conn.query(query);
-//        conn.end();
-        console.log(res);
-//        return res;
+        conn = await pool.getConnection();
+        const res = await conn.query(query);
+	    console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
     } catch (err) {
         console.error(`Error querying database: ${err}`);
     } finally {

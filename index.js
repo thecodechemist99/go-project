@@ -74,7 +74,6 @@ async function tagDetected (id) {
     switch (device) {
         case dTypes.IN:
             checkIn(id);
-            blink('green');
             break;
         case dTypes.OUT:
             checkOut(id);

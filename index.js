@@ -72,28 +72,28 @@ async function tagDetected (id) {
 
     switch (device) {
         case dTypes.IN:
-            await checkIn(id);
+            checkIn(id);
             break;
         case dTypes.OUT:
-            await checkOut(id);
+            checkOut(id);
             break;
         case dTypes.PAY:
-            await pay(id);
+            pay(id);
             break;
     }
 }
 
-async function checkIn (tagId) {
+function checkIn (tagId) {
     console.log('check in');
     queryDatabase("INSERT INTO journey_log(token_id, station_id) value('?', ?)", [tagId, stationId]);
 }
 
-async function checkOut (tagId) {
+function checkOut (tagId) {
     console.log('check out');
     queryDatabase("SELECT * FROM journey_log WHERE token_id = '?'", tagId);
 }
 
-async function pay (tagId) {
+function pay (tagId) {
     console.log('pay');
     queryDatabase("INSERT INTO journey_log(token_id, station_id) value(?, ?)", [tagId, stationId]);
 }

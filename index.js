@@ -97,7 +97,6 @@ async function checkIn (tagId) {
 }
 
 async function checkOut (tagId) {
-    console.log('check out');
     const res = await queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?' ORDER BY id desc LIMIT 1", tagId);
     const result = (JSON.parse(JSON.stringify(res)));
     if (result[0].station_id != stationId) {
@@ -109,7 +108,6 @@ async function checkOut (tagId) {
 }
 
 async function pay (tagId) {
-    console.log('pay');
     // query starting station
     const res_start = await queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?' ORDER BY id desc LIMIT 1", tagId);
     const start = (JSON.parse(JSON.stringify(res_start))[0].station_id);
@@ -121,7 +119,7 @@ async function pay (tagId) {
 
     // save payment
     const res_pay = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
-    const station = (JSON.parse(JSON.stringify(res_pay)));
+    const result = (JSON.parse(JSON.stringify(res_pay)));
     if (!result.warningStatus) {
         console.log('Payment successful.');
     }

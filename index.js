@@ -89,7 +89,9 @@ async function tagDetected (id) {
 
 async function checkIn (tagId) {
     console.log('check in');
-    queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
+    if (tagId != 2) {
+        queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
+    }
 }
 
 function checkOut (tagId) {
@@ -99,7 +101,7 @@ function checkOut (tagId) {
 
 function pay (tagId) {
     console.log('pay');
-    queryDatabase("INSERT INTO journey_log(token_id, station_id) value(?, ?)", [tagId, stationId]);
+    queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
 }
 
 /* ====== Hardware related actions ====== */
@@ -127,7 +129,7 @@ const pool = mariadb.createPool({
      connectionLimit: 5
 });
 
-async function queryDatabase(query, vars) {
+async function queryDatabase(query) {
     let conn;
     try {
 	    conn = await pool.getConnection();

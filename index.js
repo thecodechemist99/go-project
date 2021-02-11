@@ -89,6 +89,7 @@ async function checkIn (tagId) {
     console.log('check in');
     if (tagId != 2) {
         const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
+        console.log(res);
         const result = res.toString();
         console.log(result);
         if (result.includes('OkPacket')) {
@@ -138,10 +139,10 @@ async function queryDatabase(query) {
     let conn;
     try {
 	    conn = await pool.getConnection();
-        const res = conn.query(query);
-        conn.end();
-        return res;
+        return conn.query(query);
     } catch (err) {
         console.error(`Error querying database: ${err}`);
+    } finally {
+        conn.end();
     }
 }

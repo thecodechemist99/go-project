@@ -89,7 +89,7 @@ async function tagDetected (id) {
 
 async function checkIn (tagId) {
     console.log('check in');
-    queryDatabase("INSERT INTO journey_log(token_id, station_id) values('?', ?)", [tagId, stationId]);
+    queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
 }
 
 function checkOut (tagId) {
@@ -131,7 +131,7 @@ async function queryDatabase(query, vars) {
     let conn;
     try {
 	    conn = await pool.getConnection();
-	    const res = await conn.query(query, vars);
+	    const res = await conn.query(query);
 	    console.log(res);
     } catch (err) {
         console.error(`Error querying database: ${err}`);

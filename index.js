@@ -142,7 +142,5 @@ async function queryDatabase(query) {
         return conn.query(query);
     } catch (err) {
         console.error(`Error querying database: ${err}`);
-    } finally {
-        conn.end();
     }
 }

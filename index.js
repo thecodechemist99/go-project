@@ -70,7 +70,7 @@ async function tagDetected (id) {
     console.log(`Tag with UID ${id} detected.`);
     blink('green');
 
-    console.log(device, dTypes.IN);
+    console.log('Type: ' + device + ' and check value ' + dTypes.IN);
     switch (device) {
         case dTypes.IN:
             checkIn(id);

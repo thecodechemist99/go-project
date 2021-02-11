@@ -30,7 +30,6 @@ async function setup () {
 
     try {
         // set default for LEDs to LOW
-        console.log('device: ' + device);
         if (device != dTypes.PAY) {
             rpio.open(3, rpio.OUTPUT, rpio.LOW);
             rpio.open(5, rpio.OUTPUT, rpio.LOW);
@@ -83,7 +82,6 @@ async function tagDetected (id) {
             break;
         case dTypes.PAY:
             pay(id);
-            blink('green');
             break;
     }
 }

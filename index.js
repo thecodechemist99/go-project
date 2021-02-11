@@ -90,13 +90,13 @@ async function checkIn (tagId) {
     if (tagId != 2) {
         const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
         console.log(JSON.stringify(res));
-//        console.log(JSON.parse(JSON.stringify(res)));
-//        console.log(JSON.parse(JSON.stringify(res)).warningStatus);
-//        if (JSON.parse(JSON.stringify(res)).warningStatus) {
-//            blink('red');
-//        } else {
-//            blink('green');
-//        }
+        const result = res.toString();
+        console.log(result);
+        if (result.includes('OkPacket')) {
+            blink('green');
+        } else {
+            blink('red');
+        }
     }
 }
 
@@ -132,7 +132,7 @@ const pool = mariadb.createPool({
      user:'pi', 
      password: 'raspberry',
      database: 'go',
-     connectionLimit: 100
+     connectionLimit: 5
 });
 
 async function queryDatabase(query) {

@@ -87,7 +87,6 @@ function tagDetected (id) {
 }
 
 async function checkIn (tagId) {
-    console.log('check in');
     const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
     const result = (JSON.parse(JSON.stringify(res)));
     if (result.warningStatus) {
@@ -99,7 +98,9 @@ async function checkIn (tagId) {
 
 async function checkOut (tagId) {
     console.log('check out');
-    queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?'", tagId);
+    const res = queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?'", tagId);
+    const result = (JSON.parse(JSON.stringify(res)));
+    console.log(result);
 }
 
 async function pay (tagId) {
@@ -132,33 +133,15 @@ const pool = mariadb.createPool({
      connectionLimit: 5
 });
 
-//async function queryDatabase(query) {
-//    let conn;
-//    try {
-//	    conn = await pool.getConnection();
-//        const res = conn.query(query);
-//        conn.end();
-//        console.log(res);
-//        return res;
-//    } catch (err) {
-//        console.error(`Error querying database: ${err}`);
-//    } finally {
-//        if (conn) return conn.end();
-//    }
-//}
-
 async function queryDatabase (query) {
     let conn;
     try {
         conn = await pool.getConnection();
         return conn.query(query);
-	    console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
-        return res;
     } catch (err) {
         console.error(`Error querying database: ${err}`);
     } finally {
         conn.end();
-//        if (conn) return conn.end();
     }
 }
 

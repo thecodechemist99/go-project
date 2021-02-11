@@ -89,7 +89,7 @@ async function tagDetected (id) {
 
 async function checkIn (tagId) {
     console.log('check in');
-    queryDatabase("INSERT INTO journey_log(token_id, station_id) value('?', ?)", [tagId, stationId]);
+    queryDatabase("INSERT INTO journey_log(token_id, station_id) values('?', ?)", [tagId, stationId]);
 }
 
 function checkOut (tagId) {

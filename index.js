@@ -90,7 +90,6 @@ async function checkIn (tagId) {
     console.log('check in');
     if (tagId != 2) {
         const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
-        console.log(typeof(res));
         if (res.includes('OkPacket')) {
             blink('green');
         } else {

@@ -84,14 +84,17 @@ function tagDetected (id) {
 }
 
 async function checkIn (tagId) {
-    queryDatabase("INSERT INTO journey_log(token_id, station_id) value(?, ?)", [tagId, stationId]);
+    console.log('check in');
+    queryDatabase("INSERT INTO journey_log(token_id, station_id) value('?', ?)", [tagId, stationId]);
 }
 
 async function checkOut (tagId) {
+    console.log('check out');
     queryDatabase("SELECT * FROM journey_log WHERE token_id = '?'", tagId);
 }
 
 async function pay (tagId) {
+    console.log('pay');
     queryDatabase("INSERT INTO journey_log(token_id, station_id) value(?, ?)", [tagId, stationId]);
 }
 

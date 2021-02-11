@@ -89,7 +89,17 @@ async function tagDetected (id) {
 
 function checkIn (tagId) {
     console.log('check in');
-    queryDatabase("INSERT INTO journey_log(token_id, station_id) value('?', ?)", [tagId, stationId]);
+    let conn;
+    try {
+	    conn = await pool.getConnection();
+	    const res = await conn.query("INSERT INTO journey_log(token_id, station_id) value('?', ?)", [tagId, stationId]);
+	    console.log(res);
+    } catch (err) {
+        console.error(`Error querying database: ${err}`);
+    } finally {
+        if (conn) return conn.end();
+    }
+//    queryDatabase("INSERT INTO journey_log(token_id, station_id) value('?', ?)", [tagId, stationId]);
 }
 
 function checkOut (tagId) {

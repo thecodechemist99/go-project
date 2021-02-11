@@ -110,7 +110,21 @@ async function checkOut (tagId) {
 
 async function pay (tagId) {
     console.log('pay');
-    queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
+    // query starting station
+    const res_start = await queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?' ORDER BY id desc LIMIT 1", tagId);
+    const start = (JSON.parse(JSON.stringify(res_start))[0].station_id);
+
+    // query cost
+    const res_cost = await queryDatabase(`SELECT cost FROM prices WHERE (station_1 = ${start} AND station_2 = ${stationId}) OR (station_1 = ${stationId} AND station_2 = ${start}) LIMIT 1`);
+    const cost = (JSON.parse(JSON.stringify(res_cost))[0].cost);
+    console.log(`The ride costs ${cost / 100} Euros.`);
+
+    // save payment
+    const res_pay = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
+    const station = (JSON.parse(JSON.stringify(res_pay)));
+    if (!result.warningStatus) {
+        console.log('Payment successful.');
+    }
 }
 
 /* ====== Hardware related actions ====== */

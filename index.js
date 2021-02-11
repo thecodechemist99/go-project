@@ -100,6 +100,11 @@ async function checkOut (tagId) {
     console.log('check out');
     const res = await queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?' ORDER BY id desc LIMIT 1", tagId);
     const result = (JSON.parse(JSON.stringify(res)));
+    if (result[0].station_id != stationId) {
+        blink('red');
+    } else {
+        blink('green');
+    }
     console.log(result);
 }
 

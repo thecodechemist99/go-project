@@ -97,7 +97,7 @@ async function checkIn (tagId) {
 //        } else {
 //            blink('green');
 //        }
-//    }
+    }
 }
 
 async function checkOut (tagId) {

@@ -89,6 +89,7 @@ function tagDetected (id) {
 async function checkIn (tagId) {
     console.log('check in');
     const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
+    const result = (JSON.parse(JSON.stringify(res)));
     if (result.warningStatus) {
         blink('red');
     } else {

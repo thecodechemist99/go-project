@@ -66,19 +66,19 @@ const dTypes = {
     PAY: 'PAY'
 }
 
-function tagDetected (id) {
+async function tagDetected (id) {
     console.log(`Tag with UID ${id} detected.`);
     blink('green');
 
     switch (device) {
         case dTypes.IN:
-            checkIn(id);
+            await checkIn(id);
             break;
         case dTypes.OUT:
-            checkOut(id);
+            await checkOut(id);
             break;
         case dTypes.PAY:
-            pay(id);
+            await pay(id);
             break;
     }
 }

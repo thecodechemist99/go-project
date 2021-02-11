@@ -68,7 +68,7 @@ function checkForTag () {
 
 /* ====== Act upon tag detection depending on device type ====== */
 
-async function tagDetected (id) {
+function tagDetected (id) {
     console.log(`Tag with UID ${id} detected.`);
 
     switch (device) {
@@ -77,7 +77,6 @@ async function tagDetected (id) {
             break;
         case dTypes.OUT:
             checkOut(id);
-            blink('green');
             break;
         case dTypes.PAY:
             pay(id);
@@ -87,8 +86,10 @@ async function tagDetected (id) {
 
 async function checkIn (tagId) {
     if (tagId != 2) {
+        console.log('check in');
         const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
         const result = (JSON.parse(JSON.stringify(res)));
+        console.log(result);
         if (result.warningStatus) {
             blink('green');
         } else {
@@ -159,4 +160,3 @@ async function asyncFunction() {
         if (conn) return conn.end();
     }
 }
-

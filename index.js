@@ -43,7 +43,7 @@ async function setup () {
         setInterval(checkForTag, 20);
         console.log('Searching for tags ...');
     } catch (err) {
-        console.error(`Error monitoring tokens: ${err}`);
+        console.error(`Error monitoring tags: ${err}`);
     }
 }
 

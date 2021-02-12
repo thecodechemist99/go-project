@@ -145,7 +145,7 @@ const pool = mariadb.createPool({
      user:'pi', 
      password: 'raspberry',
      database: 'go',
-     connectionLimit: 6
+     connectionLimit: 5
 });
 
 async function queryDatabase (query) {

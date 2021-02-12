@@ -47,7 +47,6 @@ async function setup () {
     }
 }
 
-
 /* ====== Detect tags and read UID ====== */
 
 let gCurrentTag = undefined;

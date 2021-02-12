@@ -96,7 +96,7 @@ async function checkIn (tagId) {
 }
 
 async function checkOut (tagId) {
-    const res = await queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?' ORDER BY id desc LIMIT 1", tagId);
+    const res = await queryDatabase(`SELECT station_id FROM journey_log WHERE token_id = '${tagId}' ORDER BY id desc LIMIT 1`);
     const result = (JSON.parse(JSON.stringify(res)));
     if (result[0].station_id != stationId) {
         blink('red');
@@ -108,7 +108,7 @@ async function checkOut (tagId) {
 
 async function pay (tagId) {
     // query starting station
-    const res_start = await queryDatabase("SELECT station_id FROM journey_log WHERE token_id = '?' ORDER BY id desc LIMIT 1", tagId);
+    const res_start = await queryDatabase(`SELECT station_id FROM journey_log WHERE token_id = '${tagId}' ORDER BY id desc LIMIT 1`);
     const start = (JSON.parse(JSON.stringify(res_start))[0].station_id);
 
     // query cost

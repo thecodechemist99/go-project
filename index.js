@@ -103,7 +103,6 @@ async function checkOut (tagId) {
     } else {
         blink('green');
     }
-    console.log(result);
 }
 
 async function pay (tagId) {
@@ -146,7 +145,7 @@ const pool = mariadb.createPool({
      user:'pi', 
      password: 'raspberry',
      database: 'go',
-     connectionLimit: 5
+     connectionLimit: 6
 });
 
 async function queryDatabase (query) {

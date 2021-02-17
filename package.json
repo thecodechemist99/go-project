@@ -12,7 +12,7 @@
   "version": "0.2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/museuminabox/rfid-rc522.git"
+    "url": "git+https://github.com/thecodechemist99/go-project.git"
   },
   "scripts": {
     "install": "(node-gyp rebuild) || (exit 0)",
@@ -25,19 +25,9 @@
     "node": "0.12.9"
   },
   "dependencies": {
-    "buffertools": "^2.1.6"
+    "buffertools": "^2.1.6",
+    "mariadb": "^2.5.2",
+    "rpio": "^2.4.2"
   },
-  "optionalDependencies": {},
-  "bugs": {
-    "url": "https://github.com/museuminabox/rfid-rc522/issues"
-  },
-  "homepage": "https://github.com/museuminabox/rfid-rc522#readme",
-  "directories": {},
-  "maintainers": [
-    {
-      "name": "Adrian McEwen",
-      "email": "adrian@museuminabox.org"
-    }
-  ],
   "readme": "README.md"
 }

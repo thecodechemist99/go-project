@@ -6,7 +6,7 @@
 
 #define DEFAULT_SPI_SPEED 5000L
 
-#define DEBUG   0
+#define DEBUG   1
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
@@ -370,10 +370,15 @@ napi_value readPage(napi_env env, napi_callback_info args) {
     // Check the argument types
     // FIXME We should use napi_typeof to check this and argv[1]
 #if 0
-    if (!argv[0]->IsNumber()) {
+    if (napi_status napi_typeof(env, argv[0], napi_number) != napi_ok) {
         napi_throw_type_error(env, "Number expected", "Wrong arguments");
         return nullptr;
     }
+
+//    if (!argv[0]->IsNumber()) {
+//        napi_throw_type_error(env, "Number expected", "Wrong arguments");
+//        return nullptr;
+//    }
 #endif
 
     // Which page have we been asked for

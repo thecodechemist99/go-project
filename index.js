@@ -87,7 +87,7 @@ function tagDetected (id) {
 
 async function checkIn (tagId) {
     const res = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
-    const result = (JSON.parse(JSON.stringify(res)));
+    const result = JSON.parse(JSON.stringify(res));
     if (result.warningStatus) {
         blink('red');
     } else {
@@ -97,7 +97,7 @@ async function checkIn (tagId) {
 
 async function checkOut (tagId) {
     const res = await queryDatabase(`SELECT station_id FROM journey_log WHERE token_id = '${tagId}' ORDER BY id desc LIMIT 1`);
-    const result = (JSON.parse(JSON.stringify(res)));
+    const result = JSON.parse(JSON.stringify(res));
     if (result[0].station_id != stationId) {
         blink('red');
     } else {
@@ -108,16 +108,16 @@ async function checkOut (tagId) {
 async function pay (tagId) {
     // query starting station
     const res_start = await queryDatabase(`SELECT station_id FROM journey_log WHERE token_id = '${tagId}' ORDER BY id desc LIMIT 1`);
-    const start = (JSON.parse(JSON.stringify(res_start))[0].station_id);
+    const start = JSON.parse(JSON.stringify(res_start))[0].station_id;
 
     // query cost
     const res_cost = await queryDatabase(`SELECT cost FROM prices WHERE (station_1 = ${start} AND station_2 = ${stationId}) OR (station_1 = ${stationId} AND station_2 = ${start}) LIMIT 1`);
-    const cost = (JSON.parse(JSON.stringify(res_cost))[0].cost);
-    console.log(`The ride costs ${cost / 100} Euros.`);
+    const cost = JSON.parse(JSON.stringify(res_cost))[0].cost;
+    console.log(`The ride costs ${(cost / 100).toFixed(2)} Euros.`);
 
     // save payment
     const res_pay = await queryDatabase(`INSERT INTO journey_log(token_id, station_id) values('${tagId}', ${stationId})`);
-    const result = (JSON.parse(JSON.stringify(res_pay)));
+    const result = JSON.parse(JSON.stringify(res_pay));
     if (!result.warningStatus) {
         console.log('Payment successful.');
     }
@@ -141,8 +141,8 @@ function blink (colour) {
 // buildt upon example code from https://mariadb.com/kb/en/getting-started-with-the-nodejs-connector/
 
 const pool = mariadb.createPool({
-     host: '10.0.0.175', 
-     user:'pi', 
+     host: '10.0.0.175',
+     user:'pi',
      password: 'raspberry',
      database: 'go',
      connectionLimit: 5
